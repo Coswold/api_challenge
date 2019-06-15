@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import jsonify, render_template, request, make_response
+from flask import jsonify, render_template, request, make_response, url_for, redirect
 from flask_pymongo import PyMongo
 
 from flask_limiter import Limiter
@@ -37,19 +37,30 @@ def home():
 def get_state_capitals():
     city = mongo.db.cities
     output = []
-    for s in city.find():
-        output.append({'name' : s['name'], 'state' : s['state']})
+    for c in city.find():
+        output.append({'name' : c['name'], 'state' : c['state']})
     return jsonify({'result' : output}), 201
 
 @app.route('/api/<name>', methods=['GET'])
 def get_one_capital(name):
+    name = name.lower()
     city = mongo.db.cities
-    s = city.find_one({'name' : name})
-    if s:
-        output = {'name' : s['name'], 'state' : s['state']}
+    output = []
+    # c = city.find_one({'name' : name})
+    for c in city.find():
+        output.append({'name': c['name'], 'state': c['state']})
+    res = [i for i in output if name in i['name'].lower()]
+    if res:
+        output = res
     else:
         output = "City not in database"
     return jsonify({'result' : output}), 201
+
+@app.route('/accept', methods=['POST'])
+def accept():
+    state = request.form['state']
+    print(state)
+    return redirect(url_for('get_one_capital', name=state))
 
 
 if __name__ == '__main__':

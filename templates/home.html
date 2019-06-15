@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="../static/css/main.css" />
     </head>
     
     <body>
         <h1>State Capital API</h1>
 
-        <form action="#">
-            Enter State:<br>
-            <input type="text" name="firstname" value="State">
+        <form class="form-inline" action="/accept", method="POST">
+            <input type="text" placeholder="Enter State" name="state" value="">
             <br><br>
-            <input type="submit" value="Submit">
+            <input type="submit">
         </form>
         
         <p>All items will be returned in a JSON object. Valid endpoints:</p>
