@@ -4,18 +4,20 @@ from flask import request
 from flask import make_response
 from flask_pymongo import PyMongo
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 app = Flask(__name__)
+limiter = Limiter(
+        app,
+        key_func=get_remote_address,
+        default_limits=["500 per day", "50 per hour"]
+)
 
 app.config['MONGO_DBNAME'] = 'citydb'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/citydb'
 
 mongo = PyMongo(app)
-
-#client = pymongo.MongoClient("mongodb://localhost:27017/citydb")
-
-#db = client['citydb']
-
-#cities = db.cities
 
 city1 = {
         'name': 'Boston',
