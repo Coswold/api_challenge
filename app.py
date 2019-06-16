@@ -15,11 +15,11 @@ limiter = Limiter(
 )
 
 app.config['MONGO_DBNAME'] = 'capitalsdb'
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/capitalsdb'
+app.config['MONGO_URI'] = 'mongodb://mongolab-graceful-69684/capitalsdb' or 'mongodb://localhost:27017/capitalsdb'
 
 mongo = PyMongo(app)
 
-# items = [{ 'capital': 'Boston', 'state': 'Massechusets' },
+#items = [{ 'capital': 'Boston', 'state': 'Massechusets' },
 #        { 'capital': 'Puyallup', 'state': 'Washington' },
 #        { 'capital': 'Sacremento', 'state': 'California' },
 #        { 'capital': 'Portland', 'state': 'Oregon' }
