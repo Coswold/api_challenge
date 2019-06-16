@@ -1,4 +1,5 @@
 # API
+[Deployment](https://capitals-api.herokuapp.com/)
 
 > Return the capital city of input state
 
