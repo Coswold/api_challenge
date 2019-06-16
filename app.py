@@ -15,7 +15,7 @@ limiter = Limiter(
 )
 
 app.config['MONGO_DBNAME'] = 'capitalsdb'
-app.config['MONGO_URI'] = 'mongodb://mongolab-graceful-69684/capitalsdb' or 'mongodb://localhost:27017/capitalsdb'
+app.config['MONGO_URI'] = 'mongodb://heroku_nkr5hncm:l769nnp0qu5rdv3oenun1iva5c@ds137827.mlab.com:37827/heroku_nkr5hncm' or 'mongodb://localhost:27017/capitalsdb'
 
 mongo = PyMongo(app)
 
