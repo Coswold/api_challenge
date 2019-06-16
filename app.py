@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({'error': 'Not found. Make sure the URL typed is a correct endpoint.'}), 404)
 
 @app.route('/')
 def home():
@@ -40,10 +40,8 @@ def get_one_capital(name):
     name = name.lower()
     city = mongo.db.capitals
     output = []
-    # c = city.find_one({'name' : name})
     for c in city.find():
         output.append({'capital': c['capital'], 'state': c['name']})
-    # res = [i for i in output if name in i['state'].lower()]
     search = Search(output, name)
     res = search.find()
     if res:
@@ -56,7 +54,7 @@ def get_one_capital(name):
 def accept():
     state = request.form['state']
     print(state)
-    return redirect(url_for('get_one_capital', name=state))
+    return redirect(url_for('get_one_capital', name=state)), 201
 
 
 if __name__ == '__main__':
