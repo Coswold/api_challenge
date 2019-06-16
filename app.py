@@ -32,7 +32,7 @@ def get_state_capitals():
     city = mongo.db.capitals
     output = []
     for c in city.find():
-        output.append({'capital' : c['capital'], 'state' : c['state']})
+        output.append({'capital' : c['capital'], 'state' : c['name']})
     return jsonify({'result' : output}), 201
 
 @app.route('/api/<name>', methods=['GET'])
@@ -42,7 +42,7 @@ def get_one_capital(name):
     output = []
     # c = city.find_one({'name' : name})
     for c in city.find():
-        output.append({'capital': c['capital'], 'state': c['state']})
+        output.append({'capital': c['capital'], 'state': c['name']})
     # res = [i for i in output if name in i['state'].lower()]
     search = Search(output, name)
     res = search.find()
