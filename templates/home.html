@@ -6,18 +6,20 @@
     </head>
     
     <body>
-        <h1>State Capital API</h1>
+        <div class="center">
+            <h1>State Capital API</h1>
 
-        <form class="form-inline" action="/accept", method="POST">
-            <input type="text" placeholder="Enter State" name="state" value="">
-            <br><br>
-            <input type="submit">
-        </form>
-        
-        <p>All items will be returned in a JSON object. Valid endpoints:</p>
-        <ul>
-            <li>/api returns all state capitals</li>
-            <li>/api/{insert state} returns capital of input state</li>
-        </ul>
+            <form class="form-inline" action="/accept", method="POST">
+                <input type="text" placeholder="Enter State" name="state" value="">
+                <br><br>
+                <input class="button" type="submit">
+            </form>
+            
+            <p>All items will be returned in a JSON object. Valid endpoints:</p>
+            <ul>
+                <li>/api returns all state capitals</li>
+                <li>/api/{insert state} returns capital of input state</li>
+            </ul>
+        </div>
     </body>
 </html>

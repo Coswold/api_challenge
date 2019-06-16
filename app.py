@@ -5,6 +5,8 @@ from flask_pymongo import PyMongo
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
+from search import Search
+
 app = Flask(__name__)
 limiter = Limiter(
         app,
@@ -12,17 +14,19 @@ limiter = Limiter(
         default_limits=["500 per day", "50 per hour"]
 )
 
-app.config['MONGO_DBNAME'] = 'citydb'
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/citydb'
+app.config['MONGO_DBNAME'] = 'capitalsdb'
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/capitalsdb'
 
 mongo = PyMongo(app)
 
-city1 = {
-        'name': 'Boston',
-        'state': 'MA'
-        }
+# items = [{ 'capital': 'Boston', 'state': 'Massechusets' },
+#        { 'capital': 'Puyallup', 'state': 'Washington' },
+#        { 'capital': 'Sacremento', 'state': 'California' },
+#        { 'capital': 'Portland', 'state': 'Oregon' }
+#        ]
 
-#result = cities.insert_one(city1)
+#for item in items:
+#    mongo.db.capitals.insert_one(item)
 #print('City: {0}'.format(result.inserted_id))
 
 @app.errorhandler(404)
@@ -35,21 +39,23 @@ def home():
 
 @app.route('/api', methods=['GET'])
 def get_state_capitals():
-    city = mongo.db.cities
+    city = mongo.db.capitals
     output = []
     for c in city.find():
-        output.append({'name' : c['name'], 'state' : c['state']})
+        output.append({'capital' : c['capital'], 'state' : c['state']})
     return jsonify({'result' : output}), 201
 
 @app.route('/api/<name>', methods=['GET'])
 def get_one_capital(name):
     name = name.lower()
-    city = mongo.db.cities
+    city = mongo.db.capitals
     output = []
     # c = city.find_one({'name' : name})
     for c in city.find():
-        output.append({'name': c['name'], 'state': c['state']})
-    res = [i for i in output if name in i['name'].lower()]
+        output.append({'capital': c['capital'], 'state': c['state']})
+    # res = [i for i in output if name in i['state'].lower()]
+    search = Search(output, name)
+    res = search.find()
     if res:
         output = res
     else:
