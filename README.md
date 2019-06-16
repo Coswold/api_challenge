@@ -1,7 +1,5 @@
-# API
+# API Challenge
 [Deployment](https://capitals-api.herokuapp.com/)
-
-> Return the capital city of input state
 
 ## Requirements
 
@@ -24,3 +22,13 @@ Deliverables
 * Code accessible in a github repository.
 * Code deployed on a server in the cloud, so that the API may be invoked.
 * A simple, hosted, front-end to invoke the search API
+
+## Solutions
+
+#### Security
+By implementing [Flask Limiter](https://flask-limiter.readthedocs.io/en/stable/), requests from the api are limited to 500 per day. Do to the simplicity of the app, 
+I am not expecting more requests than that, but limits are easily adjustable. 
+
+#### Scalability
+Along with security, Flask Limiter also helps with scalabilty. I am also improving the search algorithm to be more 
+efficient when a higher rate of requests come in and more data is stored.
