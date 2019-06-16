@@ -19,16 +19,6 @@ app.config['MONGO_URI'] = 'mongodb://heroku_nkr5hncm:l769nnp0qu5rdv3oenun1iva5c@
 
 mongo = PyMongo(app)
 
-#items = [{ 'capital': 'Boston', 'state': 'Massechusets' },
-#        { 'capital': 'Puyallup', 'state': 'Washington' },
-#        { 'capital': 'Sacremento', 'state': 'California' },
-#        { 'capital': 'Portland', 'state': 'Oregon' }
-#        ]
-
-#for item in items:
-#    mongo.db.capitals.insert_one(item)
-#print('City: {0}'.format(result.inserted_id))
-
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
