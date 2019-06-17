@@ -5,7 +5,14 @@ from flask_pymongo import PyMongo
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from search import Search
+from trie import TrieNode, Trie
+
+tree = Trie()
+def build_search():
+    city = mongo.db.capitals
+    for c in city.find():
+        tree.insert(c['name'])
+        print(c['name'].lower())
 
 app = Flask(__name__)
 limiter = Limiter(
@@ -15,7 +22,7 @@ limiter = Limiter(
 )
 
 app.config['MONGO_DBNAME'] = 'capitalsdb'
-app.config['MONGO_URI'] = 'DBKEY' or 'mongodb://localhost:27017/capitalsdb'
+app.config['MONGO_URI'] = 'mongodb://heroku_nkr5hncm:l769nnp0qu5rdv3oenun1iva5c@ds137827.mlab.com:37827/heroku_nkr5hncm' or 'mongodb://localhost:27017/capitalsdb'
 
 mongo = PyMongo(app)
 
@@ -25,6 +32,7 @@ def not_found(error):
 
 @app.route('/')
 def home():
+    build_search()
     return render_template('home.html')
 
 @app.route('/api', methods=['GET'])
@@ -39,13 +47,11 @@ def get_state_capitals():
 def get_one_capital(name):
     name = name.lower()
     city = mongo.db.capitals
-    output = []
-    for c in city.find():
-        output.append({'capital': c['capital'], 'state': c['name']})
-    search = Search(output, name)
-    res = search.find()
+    state = tree.search(name)
+    print(state)
+    res = city.find_one({'name': state})
     if res:
-        output = res
+        output = {'capital': res['capital'], 'state': res['name']}
     else:
         output = "City not in database"
     return jsonify({'result' : output}), 201

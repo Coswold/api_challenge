@@ -3,7 +3,7 @@ class TrieNode(object):
     def __init__(self, word=None):
         """Initialize this trie node."""
         self.word = word
-        self.children = [None] * 26
+        self.children = [None] * 27
 
     def __repr__(self):
         """Return a string representation of this trie node."""
@@ -59,7 +59,7 @@ class Trie(object):
         """Return the price of the call for the number input."""
         current = self.root
         for let in word:
-            key = hash(let) % len(current.children)
+            key = ord(let.lower()) - 97
             if current.children[key] is not None:
                 current = current.children[key]
             else:
@@ -71,10 +71,13 @@ class Trie(object):
         """Insert the path of the words into this trie."""
         current = self.root
         for let in letter_path:
-            key = hash(let) % len(current.children)
+            key = ord(let.lower()) - 97
+            if let == ' ':
+                key = 26
+            print(key, let.lower())
             if current.children[key] == None:
                 current.children[key] = TrieNode(letter_path)
                 self.size += 1
-                if current.word == None:
-                    current.word = letter_path
             current = current.children[key]
+            if current.word == None:
+                current.word = letter_path

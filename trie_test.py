@@ -17,8 +17,8 @@ class TrieTest(unittest.TestCase):
         tree = Trie([('North Dakota'), ('North Carolina')])
         assert tree.height() == 14
         assert tree.size == 20
-        assert tree.root.children[hash('N') % 26].word == 'North Dakota'
-        assert tree.root.children[hash('N') % 26].children[hash('o') % 26].children[hash('r') % 26].word == 'North Dakota'
+        assert tree.root.children[hash('n') % 26].word == 'North Dakota'
+        assert tree.root.children[hash('n') % 26].children[hash('o') % 26].children[hash('r') % 26].word == 'North Dakota'
         assert tree.is_empty() is False
 
     def test_search(self):
@@ -32,3 +32,4 @@ class TrieTest(unittest.TestCase):
         assert tree.search('catch') == 'catch'
         tree.insert('catholicism')
         assert tree.search('catholic') == 'catholic'
+        assert tree.search('zoo') == None
