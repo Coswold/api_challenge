@@ -32,3 +32,4 @@ I am not expecting more requests than that, but limits are easily adjustable.
 #### Scalability
 Along with security, Flask Limiter also helps with scalabilty. I have implemented a trie as the search algorithm to be more 
 efficient when a higher rate of requests come in and more data is stored. This trie returns the closest match to the user input.
+Currently working on storing the search tree in a session variable so it will only have to be created once per session.
