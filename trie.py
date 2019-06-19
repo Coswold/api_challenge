@@ -59,6 +59,8 @@ class Trie(object):
         """Return the price of the call for the number input."""
         current = self.root
         for let in word:
+            if let.isalpha() == False:
+                return None
             key = ord(let.lower()) - 97
             if current.children[key] is not None:
                 current = current.children[key]
