@@ -32,7 +32,6 @@ def not_found(error):
 
 @app.route('/')
 def home():
-    build_search()
     return render_template('home.html')
 
 @app.route('/api', methods=['GET'])
@@ -45,6 +44,7 @@ def get_state_capitals():
 
 @app.route('/api/<name>', methods=['GET'])
 def get_one_capital(name):
+    build_search()
     name = name.lower()
     city = mongo.db.capitals
     state = tree.search(name)
